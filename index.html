@@ -36,25 +36,30 @@
     <meta property="og:type" content="website">
     
     <!-- //meta og -->
-     <script src="libs/js-pointer-event-handler/PointerEventHandler.js"></script>
+     <script src="../js-pointer-event-handler/PointerEventHandler.js"></script>
      <script src="PointerEventScrollbarHandler.js"></script>
      <script>
         window.addEventListener('load',()=>{
-            const pesh01 = new PointerEventScrollbarHandler(document.querySelector('#target-scrollbar-01'));
+            const pesh01 = new PointerEventScrollbarHandler((new PointerEventHandler(document.querySelector('#target-scrollbar-01'))).target);
             pesh01.on();
-            const pesh02 = new PointerEventScrollbarHandler(document.querySelector('#target-scrollbar-02'),{axis:'x'});
+            const pesh02 = new PointerEventScrollbarHandler((new PointerEventHandler(document.querySelector('#target-scrollbar-02'))).target,{axis:'x'});
             pesh02.on();
-            const pesh03 = new PointerEventScrollbarHandler(document.querySelector('#target-scrollbar-03'),{axis:'y'});
+            const pesh03 = new PointerEventScrollbarHandler((new PointerEventHandler(document.querySelector('#target-scrollbar-03'))).target,{axis:'y'});
             pesh03.on();
-            const pesh04 = new PointerEventScrollbarHandler(document.querySelector('#target-scrollbar-04'),{invert:false});
+            const pesh04 = new PointerEventScrollbarHandler((new PointerEventHandler(document.querySelector('#target-scrollbar-04'))).target,{invert:false});
             pesh04.on();
-            const pesh05 = new PointerEventScrollbarHandler(document.querySelector('#target-scrollbar-05'),{scrollbar:document.querySelector('#target-scrollbar-05-scrollbar')});
+
+            const target05 = document.querySelector('#target-scrollbar-05')
+            const target05Scrollbar = document.querySelector('#target-scrollbar-05-scrollbar')
+            const peh05 = new PointerEventHandler(target05);
+            const pesh05 = new PointerEventScrollbarHandler(target05,{scrollbar:target05Scrollbar});
             pesh05.on();
-            const pesh06 = new PointerEventScrollbarHandler(document.querySelector('#target-scrollbar-06'),{multiplier:5});
+
+            const pesh06 = new PointerEventScrollbarHandler((new PointerEventHandler(document.querySelector('#target-scrollbar-06'))).target,{multiplier:5});
             pesh06.on();
-            const pesh07 = new PointerEventScrollbarHandler(document.querySelector('#target-scrollbar-07'),{multiplier:5});
+            const pesh07 = new PointerEventScrollbarHandler((new PointerEventHandler(document.querySelector('#target-scrollbar-07'))).target,{multiplier:5});
             pesh07.on();
-            const pesh08 = new PointerEventScrollbarHandler(document.querySelector('#target-scrollbar-08'),{multiplier:5});
+            const pesh08 = new PointerEventScrollbarHandler((new PointerEventHandler(document.querySelector('#target-scrollbar-08'))).target);
             pesh08.on();
             
             
@@ -69,6 +74,11 @@
             box-shadow: 5px 5px 5px #393;
             cursor: grabbing;
         }
+        .target-content{
+            width: 500%;height: 500%;
+            background-color: #fff;
+            background: radial-gradient(circle at center, #3ffa 0%, #f33a 100%) , repeating-linear-gradient(-45deg, transparent 0 20px, #0009 20px 40px);
+        }
         
      </style>
     
@@ -77,16 +87,21 @@
 <body>
     <div class="container">
         <h1>js-pointer-event-scrollbar-handler</h1>
-        <hr>
         <ul class="list-group">
             <li class="list-group-item"><a href="https://github.com/mins01/js-pointer-event-scrollbar-handler">https://github.com/mins01/js-pointer-event-scrollbar-handler</a></li>
             <li class="list-group-item"><a href="https://mins01.github.io/js-pointer-event-scrollbar-handler/">https://mins01.github.io/js-pointer-event-scrollbar-handler/</a></li>
         </ul>
+        <hr>
+        <h2>Dependencies (Required Library)</h2>
+        <ul class="list-group">
+            <li class="list-group-item">js-pointer-event-handler <a href="https://github.com/mins01/js-pointer-event-handler">https://github.com/mins01/js-pointer-event-handler</a></li>
+        </ul>
+        <hr>
         <div class="card my-3">
             <div class="card-body">
                 <h3>axis:both, invert:true</h3>
                 <div id="target-scrollbar-01" style="width:300px;height:300px;overflow: auto;  " class="mx-auto border border-1">
-                    <div style="width: 500%;height: 500%; background: radial-gradient(circle at center, #9ff 0%, #f99 100%);" class="p-3"><label style="user-select: none;"><input type="checkbox" name="text-checkbox"> form control 클릭 테스트용</label></div>
+                    <div class="target-content p-3"><label style="user-select: none;"><input type="checkbox" name="text-checkbox"> form control 클릭 테스트용</label></div>
                 </div>
             </div>
         </div>
@@ -94,7 +109,7 @@
             <div class="card-body">
                 <h3>axis:x, invert:true</h3>
                 <div id="target-scrollbar-02" style="width:300px;height:300px;overflow: auto;  user-select: none; touch-action: none;" class="mx-auto border border-1">
-                    <div style="width: 500%;height: 500%; background: radial-gradient(circle at center, #9ff 0%, #f99 100%);"></div>
+                    <div class="target-content"></div>
                 </div>
             </div>
         </div>
@@ -102,7 +117,7 @@
             <div class="card-body">
                 <h3>axis:y, invert:true</h3>
                 <div id="target-scrollbar-03" style="width:300px;height:300px;overflow: auto;  user-select: none; touch-action: none;" class="mx-auto border border-1">
-                    <div style="width: 500%;height: 500%; background: radial-gradient(circle at center, #9ff 0%, #f99 100%);"></div>
+                    <div class="target-content"></div>
                 </div>
             </div>
         </div>
@@ -110,7 +125,7 @@
             <div class="card-body">
                 <h3>axis:both, invert:false</h3>
                 <div id="target-scrollbar-04" style="width:300px;height:300px;overflow: auto;  user-select: none; touch-action: none;" class="mx-auto border border-1">
-                    <div style="width: 500%;height: 500%; background: radial-gradient(circle at center, #9ff 0%, #f99 100%);"></div>
+                    <div class="target-content"></div>
                 </div>
             </div>
         </div>
@@ -122,7 +137,7 @@
                     여기서 드래그
                 </div>
                 <div id="target-scrollbar-05-scrollbar" style="width:300px;height:300px;overflow: auto;" class="mx-auto border border-1">
-                    <div style="width: 500%;height: 500%; background: radial-gradient(circle at center, #9ff 0%, #f99 100%);"></div>
+                    <div class="target-content"></div>
                 </div>
             </div>
         </div>
@@ -131,7 +146,7 @@
             <div class="card-body">
                 <h3>multiplier:5 </h3>
                 <div id="target-scrollbar-06" style="width:300px;height:300px;overflow: auto;  user-select: none; touch-action: none; " class="mx-auto border border-1">
-                    <div style="width: 500%;height: 500%; background: radial-gradient(circle at center, #9ff 0%, #f99 100%);"></div>
+                    <div class="target-content"></div>
                 </div>
             </div>
         </div>
@@ -139,7 +154,7 @@
             <div class="card-body">
                 <h3>multiplier:5 with scroll-behavior: smooth</h3>
                 <div id="target-scrollbar-07" style="width:300px;height:300px;overflow: auto;  user-select: none; touch-action: none; scroll-behavior: smooth;" class="mx-auto border border-1">
-                    <div style="width: 500%;height: 500%; background: radial-gradient(circle at center, #9ff 0%, #f99 100%);"></div>
+                    <div class="target-content"></div>
                 </div>
             </div>
         </div>
@@ -147,7 +162,7 @@
             <div class="card-body">
                 <h3>scrollbar-width: none;</h3>
                 <div id="target-scrollbar-08" style="width:300px;height:300px;overflow: auto;  user-select: none; touch-action: none; scrollbar-width: none;" class="mx-auto border border-1">
-                    <div style="width: 500%;height: 500%; background: radial-gradient(circle at center, #9ff 0%, #f99 100%);"></div>
+                    <div class="target-content"></div>
                 </div>
             </div>
         </div>
